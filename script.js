@@ -1,4 +1,4 @@
-
+var operators = ['+', '-', 'x', '÷'];
 var numbers = [];
 var calc = [];
 var result = 0;
@@ -20,19 +20,13 @@ function divide(num1, num2){
   return(num1/num2);
 };
 
-/*function equalPressedAgain(num1, num2){
-  var holdNumber = num2;
-  return()
-}*/
-
-
 $(document).ready(function(){
 // function prints number for the button that is pressed
 function pressButton(){
 	var printNumber = $(this).text();
 	numbers.push(printNumber);
-  //var display = $('.display');
-  //display.text(display.text()+printNumber);
+  var display = $('.display');
+  display.text(printNumber);
 };
 
 //function keeps track of operator pressed
@@ -40,8 +34,6 @@ function pressOperators(){
   getNum();
   var printOperator = $(this).text();
   calc.push(printOperator);
-  //var display = $('.display');
-  //display.text(display.text()+ printOperator);
   console.log(calc);
 
 };
@@ -52,10 +44,12 @@ function clearButton(){
  	numbers = [];
   calc = []
   result = 0;
+  var display = $('.display');
+  display.text("");
 	console.log(numbers);
 };
 
-
+//function displays result when pressing equal
 function pressEqual(){
     getNum();
     switch(calc[1]){
@@ -68,7 +62,7 @@ function pressEqual(){
       case('x'):
         result = multiply(calc[0],calc[2]);
         break;
-      case('/'):
+      case('÷'):
         result = divide(calc[0],calc[2]);
         break;
       default:
@@ -76,12 +70,11 @@ function pressEqual(){
         break;
       }
     calc = [];
+    numbers.push(result);
     console.log(result);
-    calc.push(result);
-
     console.log(calc);
-
-
+    var display = $('.display');
+    display.text(result);
 };
 
 function getNum(){
@@ -94,8 +87,7 @@ function getNum(){
 };
 
 
-$(".num").click(pressButton);
-
+$(".buttons span").click(pressButton);
 $(".clearButton").click(clearButton);
 $(".equal").click(pressEqual);
 $(".operator").click(pressOperators);
